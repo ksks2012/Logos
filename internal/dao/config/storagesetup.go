@@ -3,8 +3,8 @@ package config
 import (
 	"errors"
 
-	interfaces "github.com/common_structure/interfaces"
-	"github.com/common_structure/pkg/setting"
+	interfaces "github.com/logos/interfaces"
+	"github.com/logos/pkg/setting"
 )
 
 // StorageSetup contains storage type and storage instance

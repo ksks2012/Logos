@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/common_structure/global"
-	"github.com/common_structure/pkg/setting"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/logos/global"
+	"github.com/logos/pkg/setting"
 )
 
 type Model struct {

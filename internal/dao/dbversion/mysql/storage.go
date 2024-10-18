@@ -11,7 +11,7 @@ import (
 	metastore "github.com/semeqetjsakatayza/go-metastore-mysql"
 	mysqlroundrobinconnector "github.com/yinyin/go-mysql-round-robin-connector"
 
-	interfaces "github.com/common_structure/interfaces"
+	interfaces "github.com/logos/interfaces"
 )
 
 //go:generate go-literal-code-gen -do-not-edit -in sqlstruct.md -out sqlstruct.go -sqlschema

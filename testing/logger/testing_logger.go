@@ -1,15 +1,16 @@
 package main
 
-import(
+import (
 	"context"
 	"flag"
 	"log"
 	"strings"
+
 	"gopkg.in/natefinch/lumberjack.v2"
 
-	"github.com/common_structure/pkg/setting"
-	"github.com/common_structure/global"
-	"github.com/common_structure/pkg/logger"
+	"github.com/logos/global"
+	"github.com/logos/pkg/logger"
+	"github.com/logos/pkg/setting"
 )
 
 var (
@@ -50,7 +51,6 @@ func setupFlag() error {
 	return nil
 }
 
-
 func setupSetting() error {
 	s, err := setting.NewSetting(strings.Split(cfg, ",")...)
 	if err != nil {
@@ -70,10 +70,9 @@ func setupSetting() error {
 	return nil
 }
 
-
 func setupLogger() error {
 	global.Logger = logger.NewLogger(&lumberjack.Logger{
-		Filename: global.AppSetting.LogSavePath + "/" + global.AppSetting.LogFileName + global.AppSetting.LogFileExt,
+		Filename:  global.AppSetting.LogSavePath + "/" + global.AppSetting.LogFileName + global.AppSetting.LogFileExt,
 		MaxSize:   600,
 		MaxAge:    10,
 		LocalTime: true,

@@ -1,9 +1,9 @@
 package config
 
 import (
-	bsinterfaces "github.com/common_structure/interfaces"
-	mysqlstorage "github.com/common_structure/internal/dao/dbversion/mysql"
-	"github.com/common_structure/pkg/setting"
+	bsinterfaces "github.com/logos/interfaces"
+	mysqlstorage "github.com/logos/internal/dao/dbversion/mysql"
+	"github.com/logos/pkg/setting"
 )
 
 func setupMySQLStorageEngine(databaseSetting *setting.DatabaseSettingS) (storage bsinterfaces.StorageEngine, err error) {

@@ -8,22 +8,21 @@ import (
 	"os"
 	"os/signal"
 	"strings"
+
 	"golang.org/x/sys/unix"
 	"gopkg.in/natefinch/lumberjack.v2"
 
-
-	"github.com/common_structure/pkg/setting"
-	"github.com/common_structure/global"
-	"github.com/common_structure/internal/model"
-	"github.com/common_structure/internal/dao/config"
-	"github.com/common_structure/pkg/logger"
+	"github.com/logos/global"
+	"github.com/logos/internal/dao/config"
+	"github.com/logos/internal/model"
+	"github.com/logos/pkg/logger"
+	"github.com/logos/pkg/setting"
 )
 
 var (
 	runMode string
 	cfg     string
 )
-
 
 func init() {
 	err := setupFlag()
@@ -67,7 +66,6 @@ func setupFlag() error {
 
 	return nil
 }
-
 
 func setupSetting() error {
 	s, err := setting.NewSetting(strings.Split(cfg, ",")...)
@@ -115,7 +113,7 @@ func setupDBEngine() error {
 
 func setupLogger() error {
 	global.Logger = logger.NewLogger(&lumberjack.Logger{
-		Filename: global.AppSetting.LogSavePath + "/" + global.AppSetting.LogFileName + global.AppSetting.LogFileExt,
+		Filename:  global.AppSetting.LogSavePath + "/" + global.AppSetting.LogFileName + global.AppSetting.LogFileExt,
 		MaxSize:   600,
 		MaxAge:    10,
 		LocalTime: true,

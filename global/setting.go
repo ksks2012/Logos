@@ -1,12 +1,12 @@
 package global
 
 import (
-	"github.com/common_structure/pkg/setting"
-	"github.com/common_structure/pkg/logger"
+	"github.com/logos/pkg/logger"
+	"github.com/logos/pkg/setting"
 )
 
 var (
-	AppSetting *setting.AppSettingS
+	AppSetting      *setting.AppSettingS
 	DatabaseSetting *setting.DatabaseSettingS
 	Logger          *logger.Logger
 )
