@@ -6,7 +6,12 @@ import (
 )
 
 var (
+	// AppSetting is the global app setting
 	AppSetting      *setting.AppSettingS
 	DatabaseSetting *setting.DatabaseSettingS
-	Logger          *logger.Logger
+	// CARSetting is the global character attribute range setting
+	CARSetting *setting.CARSettingS
+	ParSetting *setting.PARSettingS
+	// Logger is the global logger
+	Logger *logger.Logger
 )

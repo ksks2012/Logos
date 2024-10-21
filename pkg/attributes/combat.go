@@ -3,6 +3,7 @@ package attributes
 import "fmt"
 
 // CombatAttributes defines the combat attributes of a character
+// NOTE: By calculting
 type CombatAttributes struct {
 	Attack       int     // Attack
 	Defense      int     // Defense

@@ -9,6 +9,25 @@ type Setting struct {
 	vp *viper.Viper
 }
 
+func NewLimitSetting(configs ...string) (*Setting, error) {
+	vp := viper.New()
+	vp.SetConfigName("limits")
+	for _, config := range configs {
+		if config != "" {
+			vp.AddConfigPath(config)
+		}
+	}
+	vp.SetConfigType("yaml")
+	err := vp.ReadInConfig()
+	if err != nil {
+		return nil, err
+	}
+
+	s := &Setting{vp}
+	s.WatchSettingChange()
+	return s, nil
+}
+
 func NewSetting(configs ...string) (*Setting, error) {
 	vp := viper.New()
 	vp.SetConfigName("config")
