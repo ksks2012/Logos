@@ -8,10 +8,11 @@ import (
 
 // Unit represents a complete character with all attributes
 type Unit struct {
-	Name      string
-	Character attributes.CharacterAttributes
-	Practice  attributes.PracticeAttributes
-	Combat    attributes.CombatAttributes
+	Name       string
+	Character  attributes.CharacterAttributes
+	Practice   attributes.PracticeAttributes
+	Combat     attributes.CombatAttributes
+	Experience attributes.Experience
 }
 
 // NewUnit creates and initializes a new unit with all attributes
