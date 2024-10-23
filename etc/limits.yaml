@@ -1,0 +1,32 @@
+CharacterAttributeRanges:
+  VitalityRange:
+    Min: 1
+    Max: 10
+  QiEnergyRange:
+    Min: 1
+    Max: 10
+  StrengthRange:
+    Min: 1
+    Max: 10
+  AgilityRange:
+    Min: 1
+    Max: 10
+  IntelligenceRange:
+    Min: 1
+    Max: 10
+PracticeAttributes:
+  BodyConstitutionRange:
+    Min: 1
+    Max: 10
+  ComprehensionRange:
+    Min: 1
+    Max: 10
+  LuckFortuneRange:
+    Min: 1
+    Max: 10
+  WillpowerRange:
+    Min: 1
+    Max: 10
+  CultivationLevelRange:
+    Min: 1
+    Max: 10
