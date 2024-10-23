@@ -3,7 +3,7 @@ package unit
 import (
 	"fmt"
 
-	"github.com/logos/pkg/attributes"
+	"github.com/logos/ecs/components/attributes"
 )
 
 // Unit represents a complete character with all attributes
