@@ -13,3 +13,26 @@
     ```
     go generate ./internal/dao/dbversion/mysql
     ```
+
+# Command
+
+## Testing
+
+- Run tests
+
+    ```
+    go test ./testing/...
+    ```
+
+# TODO
+
+- [] Show info
+- [] Save & Load
+- [] Generator
+    - [] Character
+    - [] Global map
+- [] Global update
+- [] Timer
+    - [] Run
+    - [] Pause
+    - [] Time multiplier
