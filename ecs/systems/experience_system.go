@@ -43,11 +43,15 @@ func (es *ExperienceSystem) Update() {
 }
 
 // Goroutine to regularly update positions
-func (es *ExperienceSystem) Start() {
-	go func() {
-		for {
+func (es *ExperienceSystem) Start(interval time.Duration, done <-chan struct{}) {
+	ticker := time.NewTicker(interval)
+	defer ticker.Stop()
+	for {
+		select {
+		case <-ticker.C:
 			es.Update()
-			time.Sleep(16 * time.Millisecond) // 60 updates per second
+		case <-done:
+			return
 		}
-	}()
+	}
 }
