@@ -13,16 +13,23 @@ type Unit struct {
 	Practice   attributes.PracticeAttributes
 	Combat     attributes.CombatAttributes
 	Experience attributes.Experience
+	LocationID int64
 }
 
 // NewUnit creates and initializes a new unit with all attributes
-func NewUnit(name string, charAttr attributes.CharacterAttributes, pracAttr attributes.PracticeAttributes, combAttr attributes.CombatAttributes) Unit {
+func NewUnit(name string, charAttr attributes.CharacterAttributes, pracAttr attributes.PracticeAttributes, combAttr attributes.CombatAttributes, LocationID int64) Unit {
 	return Unit{
-		Name:      name,
-		Character: charAttr,
-		Practice:  pracAttr,
-		Combat:    combAttr,
+		Name:       name,
+		Character:  charAttr,
+		Practice:   pracAttr,
+		Combat:     combAttr,
+		LocationID: LocationID,
 	}
+}
+
+// SetLocationID sets the unit's location ID
+func (u *Unit) SetLocationID(locationID int64) {
+	u.LocationID = locationID
 }
 
 // Display shows the unit's full attributes
