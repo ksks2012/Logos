@@ -50,6 +50,15 @@ type PARSettingS struct {
 	CultivationLevelRange AttributeRange
 }
 
+type WorldSettingS struct {
+	BlockSizeRange AttributeRange
+	AuraRange      AttributeRange
+}
+
+type GlobalSettingS struct {
+	CharacterLimitRange AttributeRange
+}
+
 var sections = make(map[string]interface{})
 
 func (s *Setting) ReadSection(k string, v interface{}) error {

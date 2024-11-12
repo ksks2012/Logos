@@ -1,3 +1,6 @@
+# Description: This file contains the limits for the character attributes and practice attributes.
+
+# CharacterAttributeRanges: This section contains the limits for the character attributes.
 CharacterAttributeRanges:
   VitalityRange:
     Min: 1
@@ -30,3 +33,16 @@ PracticeAttributes:
   CultivationLevelRange:
     Min: 1
     Max: 10
+# WorldAttributeSetting: This section contains the limits for the world attributes.
+WorldAttributeSetting:
+  BlockSizeRange:
+    Min: 5
+    Max: 10
+  AuraRange:
+    Min: 50
+    Max: 100
+# GlobalAttributeSetting: This section contains the limits for the global attributes.
+GlobalAttributeSetting:
+  CharacterLimitRange:
+    Min: 2
+    Max: 5

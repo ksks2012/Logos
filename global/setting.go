@@ -12,6 +12,10 @@ var (
 	// CARSetting is the global character attribute range setting
 	CARSetting *setting.CARSettingS
 	ParSetting *setting.PARSettingS
+	// WorldAttributeSetting is the global world setting
+	WorldAttributeSetting *setting.WorldSettingS
+	// GlobalAttributeSetting is the global setting
+	GlobalAttributeSetting *setting.GlobalSettingS
 	// Logger is the global logger
 	Logger *logger.Logger
 )
