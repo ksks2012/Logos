@@ -4,9 +4,9 @@ package bt
 type NodeState int
 
 const (
-	Success NodeState = iota
-	Failure
-	Running
+	SUCCESS NodeState = iota
+	FAILURE
+	RUNNING
 )
 
 // Node is the basic interface for behavior tree nodes

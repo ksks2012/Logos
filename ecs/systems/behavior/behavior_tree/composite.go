@@ -2,30 +2,30 @@ package bt
 
 // Selector: Selects a node, returns Success if any child node succeeds
 type Selector struct {
-	children []Node
+	Children []Node
 }
 
 func (s *Selector) Execute(bb *Blackboard) NodeState {
-	for _, child := range s.children {
+	for _, child := range s.Children {
 		state := child.Execute(bb)
-		if state == Success {
-			return Success
+		if state == SUCCESS {
+			return SUCCESS
 		}
 	}
-	return Failure
+	return FAILURE
 }
 
 // Sequence: Sequence node, returns Success only if all child nodes succeed
 type Sequence struct {
-	children []Node
+	Children []Node
 }
 
 func (s *Sequence) Execute(bb *Blackboard) NodeState {
-	for _, child := range s.children {
+	for _, child := range s.Children {
 		state := child.Execute(bb)
-		if state != Success {
+		if state != SUCCESS {
 			return state
 		}
 	}
-	return Success
+	return SUCCESS
 }
