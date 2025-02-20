@@ -23,6 +23,23 @@ func NewCombatAttributes(attack, defense int, criticalRate, accuracy, evasion fl
 	}
 }
 
+func CalculateCombatAttributes(ca CharacterAttributes, pa PracticeAttributes) CombatAttributes {
+	// TODO: Value Adjustment
+	attack := ca.Strength*2 + ca.QiEnergy*1 + pa.CultivationLevel*2
+	defense := ca.Vitality*2 + pa.BodyConstitution*1 + pa.CultivationLevel*1
+	criticalRate := (float64(ca.Agility)*5 + float64(pa.LuckFortune)*3) * 1.5
+	accuracy := (float64(ca.Intelligence)*10 + float64(ca.Agility)*5) * 1.2
+	evasion := (float64(ca.Agility)*5 + float64(pa.LuckFortune)*2) * 1.3
+
+	return CombatAttributes{
+		Attack:       attack,
+		Defense:      defense,
+		CriticalRate: criticalRate,
+		Accuracy:     accuracy,
+		Evasion:      evasion,
+	}
+}
+
 // Display shows the character's combat attributes
 func (c CombatAttributes) Display() {
 	fmt.Printf("Attack: %d\n", c.Attack)

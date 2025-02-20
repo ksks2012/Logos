@@ -32,7 +32,7 @@ PracticeAttributes:
     Max: 10
   CultivationLevelRange:
     Min: 1
-    Max: 10
+    Max: 2
 # WorldAttributeSetting: This section contains the limits for the world attributes.
 WorldAttributeSetting:
   BlockSizeRange:

@@ -1,6 +1,7 @@
 package setting
 
 import (
+	"fmt"
 	"time"
 )
 
@@ -43,6 +44,7 @@ type CARSettingS struct {
 }
 
 type PARSettingS struct {
+	// TODO: spiritual root range
 	BodyConstitutionRange AttributeRange
 	ComprehensionRange    AttributeRange
 	LuckFortuneRange      AttributeRange
@@ -83,4 +85,8 @@ func (s *Setting) ReloadAllSection() error {
 	}
 
 	return nil
+}
+
+func Display(setting interface{}) {
+	fmt.Printf("%+v\n", setting)
 }
