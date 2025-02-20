@@ -51,7 +51,8 @@ func main() {
 	stopChannel := make(chan os.Signal, 1)
 	signal.Notify(stopChannel, os.Interrupt, unix.SIGTERM)
 
-	initial.InitialWorld()
+	world := initial.InitialWorld()
+	initial.InitialBiology(&world)
 
 	cancel()
 }
@@ -74,7 +75,7 @@ func setupLimitSetting() error {
 	if err != nil {
 		return err
 	}
-	err = s.ReadSection("CharacterAttributeRanges", &global.ParSetting)
+	err = s.ReadSection("PracticeAttributes", &global.ParSetting)
 	if err != nil {
 		return err
 	}
