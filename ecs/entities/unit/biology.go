@@ -43,5 +43,5 @@ func (u Unit) Display() {
 		u.Practice.SpiritualRoot, u.Practice.BodyConstitution, u.Practice.Comprehension, u.Practice.LuckFortune, u.Practice.Willpower, u.Practice.CultivationLevel)
 	fmt.Println("Combat Attributes:")
 	fmt.Printf("  Attack: %d, Defense: %d, Critical Rate: %.2f%%, Accuracy: %.2f%%, Evasion: %.2f%%\n",
-		u.Combat.Attack, u.Combat.Defense, u.Combat.CriticalRate*100, u.Combat.Accuracy*100, u.Combat.Evasion*100)
+		u.Combat.Attack, u.Combat.Defense, u.Combat.CriticalRate, u.Combat.Accuracy, u.Combat.Evasion)
 }
