@@ -10,9 +10,15 @@ import (
 	"github.com/logos/global"
 )
 
-func InitialBiology(world *entities.World) {
-	newUnit := initUnit(world)
-	newUnit.Display()
+func InitialBiology(world *entities.World) []*unit.Unit {
+	var units = make([]*unit.Unit, world.TotalAura)
+	for i := 0; i < int(world.TotalAura); i++ {
+		unit := initUnit(world)
+		units[i] = &unit
+		units[i].Display()
+	}
+
+	return units
 }
 
 func initUnit(world *entities.World) unit.Unit {
@@ -39,8 +45,7 @@ func initUnit(world *entities.World) unit.Unit {
 		characterAttributes,
 		practiceAttributes,
 		attributes.CalculateCombatAttributes(characterAttributes, practiceAttributes),
-		0,
-		// world.randomLocation().ID,
+		world.RandomLocation().Aura,
 	)
 
 	return newUnit
