@@ -15,7 +15,10 @@ func InitialWorld() entities.World {
 	x := global.WorldAttributeSetting.BlockSizeRange.Min + r.Intn(global.WorldAttributeSetting.BlockSizeRange.Max-global.WorldAttributeSetting.BlockSizeRange.Min)
 	y := global.WorldAttributeSetting.BlockSizeRange.Min + r.Intn(global.WorldAttributeSetting.BlockSizeRange.Max-global.WorldAttributeSetting.BlockSizeRange.Min)
 	println("World size: ", x, y)
-	world := entities.NewWorld(x, y)
+	world, err := entities.NewWorld(x, y)
+	if err != nil {
+		panic(err)
+	}
 	world.Display()
 
 	return world
