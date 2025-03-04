@@ -10,8 +10,7 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-func SaveUnitToJSON(unit unit.Unit, filename string) error {
-
+func saveToFile(data interface{}, filename string, encoderFunc func(file *os.File) error) error {
 	if filename == "" {
 		return errors.New("filename cannot be empty")
 	}
@@ -26,66 +25,55 @@ func SaveUnitToJSON(unit unit.Unit, filename string) error {
 	}
 	defer file.Close()
 
-	encoder := json.NewEncoder(file)
-	return encoder.Encode(unit)
+	return encoderFunc(file)
+}
+
+func SaveUnitToJSON(unit unit.Unit, filename string) error {
+	return saveToFile(unit, filename, func(file *os.File) error {
+		encoder := json.NewEncoder(file)
+		return encoder.Encode(unit)
+	})
 }
 
 func SaveUnitsToJSON(units *[]unit.Unit, filename string) error {
-
-	if filename == "" {
-		return errors.New("filename cannot be empty")
-	}
-	filename = global.SaveLoadSetting.SavePath + "/" + filename + "sv" + global.SaveLoadSetting.SaveFileExt
-	err := os.MkdirAll(global.SaveLoadSetting.SavePath, os.ModePerm)
-	if err != nil {
-		return err
-	}
-	file, err := os.Create(filename)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
-
-	encoder := json.NewEncoder(file)
-	return encoder.Encode(units)
+	return saveToFile(units, filename, func(file *os.File) error {
+		encoder := json.NewEncoder(file)
+		return encoder.Encode(units)
+	})
 }
 
 func SaveUnitToYAML(unit unit.Unit, filename string) error {
-
-	if filename == "" {
-		return errors.New("filename cannot be empty")
-	}
-	filename = global.SaveLoadSetting.SavePath + "/" + filename + "sv" + global.SaveLoadSetting.SaveFileExt
-	err := os.MkdirAll(global.SaveLoadSetting.SavePath, os.ModePerm)
-	if err != nil {
-		return err
-	}
-	file, err := os.Create(filename)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
-
-	encoder := yaml.NewEncoder(file)
-	return encoder.Encode(unit)
+	return saveToFile(unit, filename, func(file *os.File) error {
+		encoder := yaml.NewEncoder(file)
+		return encoder.Encode(unit)
+	})
 }
 
 func SaveUnitsToYAML(units *[]unit.Unit, filename string) error {
+	return saveToFile(units, filename, func(file *os.File) error {
+		encoder := yaml.NewEncoder(file)
+		return encoder.Encode(units)
+	})
+}
 
-	if filename == "" {
-		return errors.New("filename cannot be empty")
+func SaveUnitState(unit unit.Unit, filename string) error {
+	switch global.SaveLoadSetting.SaveFileExt {
+	case ".json":
+		return SaveUnitToJSON(unit, filename)
+	case ".yaml", ".yml":
+		return SaveUnitToYAML(unit, filename)
+	default:
+		return errors.New("unsupported file extension")
 	}
-	filename = global.SaveLoadSetting.SavePath + "/" + filename + "sv" + global.SaveLoadSetting.SaveFileExt
-	err := os.MkdirAll(global.SaveLoadSetting.SavePath, os.ModePerm)
-	if err != nil {
-		return err
-	}
-	file, err := os.Create(filename)
-	if err != nil {
-		return err
-	}
-	defer file.Close()
+}
 
-	encoder := yaml.NewEncoder(file)
-	return encoder.Encode(units)
+func SaveUnitsState(units *[]unit.Unit, filename string) error {
+	switch global.SaveLoadSetting.SaveFileExt {
+	case ".json":
+		return SaveUnitsToJSON(units, filename)
+	case ".yaml", ".yml":
+		return SaveUnitsToYAML(units, filename)
+	default:
+		return errors.New("unsupported file extension")
+	}
 }

@@ -151,6 +151,7 @@ func TestSaveUnitsToJSON(t *testing.T) {
 		})
 	}
 }
+
 func TestSaveUnitToYAML(t *testing.T) {
 	global.SaveLoadSetting = &setting.SaveLoadSettingS{}
 	global.SaveLoadSetting.SavePath = "./var"
