@@ -1,9 +1,9 @@
-package main
+package system_test
 
 import (
 	"testing"
 
-	bt "github.com/logos/ecs/systems/behavior/behavior_tree"
+	bt "github.com/logos/ecs/ecs_systems/behavior/behavior_tree"
 )
 
 func TestBehaviorTree_SearchForResources(t *testing.T) {
