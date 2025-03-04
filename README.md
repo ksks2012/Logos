@@ -43,10 +43,10 @@
 - [x] Simple logging system
 - [] Simple ASCII visualization of maps
 - [] Simple NPC behavior change tracking
-- [] JSON / YAML to store game state
-    - [] JSON
+- [x] JSON / YAML to store game state
+    - [x] JSON
         - [x] Save
-        - [] Load
-    - [] YAML
+        - [x] Load
+    - [x] YAML
         - [x] Save
-        - [] Load
+        - [x] Load
