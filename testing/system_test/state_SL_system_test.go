@@ -14,45 +14,70 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-func TestSaveUnitToJSON(t *testing.T) {
-	global.SaveLoadSetting = &setting.SaveLoadSettingS{}
-	global.SaveLoadSetting.SavePath = "./var"
-	global.SaveLoadSetting.SaveFileExt = ".json"
-
+func TestSaveUnitState(t *testing.T) {
 	tests := []struct {
 		name     string
 		unit     unit.Unit
 		filename string
+		ext      string
 		wantErr  bool
 	}{
-		{"ValidUnit", unit.Unit{
+		{"ValidUnitJSON", unit.Unit{
 			Name:       "TestUnit",
 			Character:  attributes.CharacterAttributes{},
 			Practice:   attributes.PracticeAttributes{},
 			Combat:     attributes.CombatAttributes{},
 			Experience: attributes.Experience{},
 			LocationID: 1,
-		}, "test_unit", false},
-		{"EmptyFilename", unit.Unit{
+		}, "test_unit", ".json", false},
+		{"ValidUnitYAML", unit.Unit{
+			Name:       "TestUnit",
+			Character:  attributes.CharacterAttributes{},
+			Practice:   attributes.PracticeAttributes{},
+			Combat:     attributes.CombatAttributes{},
+			Experience: attributes.Experience{},
+			LocationID: 1,
+		}, "test_unit", ".yaml", false},
+		{"EmptyFilenameJSON", unit.Unit{
 			Name:       "TestUnit2",
 			Character:  attributes.CharacterAttributes{},
 			Practice:   attributes.PracticeAttributes{},
 			Combat:     attributes.CombatAttributes{},
 			Experience: attributes.Experience{},
 			LocationID: 1,
-		}, "", true},
+		}, "", ".json", true},
+		{"EmptyFilenameYAML", unit.Unit{
+			Name:       "TestUnit2",
+			Character:  attributes.CharacterAttributes{},
+			Practice:   attributes.PracticeAttributes{},
+			Combat:     attributes.CombatAttributes{},
+			Experience: attributes.Experience{},
+			LocationID: 1,
+		}, "", ".yaml", true},
+		{"UnsupportedExtension", unit.Unit{
+			Name:       "TestUnit3",
+			Character:  attributes.CharacterAttributes{},
+			Practice:   attributes.PracticeAttributes{},
+			Combat:     attributes.CombatAttributes{},
+			Experience: attributes.Experience{},
+			LocationID: 1,
+		}, "test_unit", ".txt", true},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			err := ecs_systems.SaveUnitToJSON(tt.unit, tt.filename)
+			global.SaveLoadSetting = &setting.SaveLoadSettingS{}
+			global.SaveLoadSetting.SavePath = "./var"
+			global.SaveLoadSetting.SaveFileExt = tt.ext
+
+			err := ecs_systems.SaveUnitState(tt.unit, tt.filename)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("SaveUnitToJSON() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("SaveUnitState() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 
 			if !tt.wantErr {
-				filePath := filepath.Join(global.SaveLoadSetting.SavePath, tt.filename+"sv.json")
+				filePath := filepath.Join(global.SaveLoadSetting.SavePath, tt.filename+"sv"+tt.ext)
 				defer os.Remove(filePath)
 
 				file, err := os.Open(filePath)
@@ -62,147 +87,15 @@ func TestSaveUnitToJSON(t *testing.T) {
 				defer file.Close()
 
 				var savedUnit unit.Unit
-				if err := json.NewDecoder(file).Decode(&savedUnit); err != nil {
-					t.Fatalf("failed to decode JSON: %v", err)
-				}
-
-				if savedUnit != tt.unit {
-					t.Errorf("expected unit %v, got %v", tt.unit, savedUnit)
-				}
-			}
-		})
-	}
-}
-
-func TestSaveUnitsToJSON(t *testing.T) {
-	global.SaveLoadSetting = &setting.SaveLoadSettingS{}
-	global.SaveLoadSetting.SavePath = "./var"
-	global.SaveLoadSetting.SaveFileExt = ".json"
-
-	tests := []struct {
-		name     string
-		units    []unit.Unit
-		filename string
-		wantErr  bool
-	}{
-		{"ValidUnits", []unit.Unit{
-			{
-				Name:       "TestUnit1",
-				Character:  attributes.CharacterAttributes{},
-				Practice:   attributes.PracticeAttributes{},
-				Combat:     attributes.CombatAttributes{},
-				Experience: attributes.Experience{},
-				LocationID: 1,
-			},
-			{
-				Name:       "TestUnit2",
-				Character:  attributes.CharacterAttributes{},
-				Practice:   attributes.PracticeAttributes{},
-				Combat:     attributes.CombatAttributes{},
-				Experience: attributes.Experience{},
-				LocationID: 2,
-			},
-		}, "test_units", false},
-		{"EmptyFilename", []unit.Unit{
-			{
-				Name:       "TestUnit3",
-				Character:  attributes.CharacterAttributes{},
-				Practice:   attributes.PracticeAttributes{},
-				Combat:     attributes.CombatAttributes{},
-				Experience: attributes.Experience{},
-				LocationID: 3,
-			},
-		}, "", true},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			err := ecs_systems.SaveUnitsToJSON(&tt.units, tt.filename)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("SaveUnitsToJSON() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-
-			if !tt.wantErr {
-				filePath := filepath.Join(global.SaveLoadSetting.SavePath, tt.filename+"sv.json")
-				defer os.Remove(filePath)
-
-				file, err := os.Open(filePath)
-				if err != nil {
-					t.Fatalf("failed to open file: %v", err)
-				}
-				defer file.Close()
-
-				var savedUnits []unit.Unit
-				if err := json.NewDecoder(file).Decode(&savedUnits); err != nil {
-					t.Fatalf("failed to decode JSON: %v", err)
-				}
-
-				if len(savedUnits) != len(tt.units) {
-					t.Errorf("expected %d units, got %d", len(tt.units), len(savedUnits))
-				}
-
-				for i, savedUnit := range savedUnits {
-					if savedUnit != tt.units[i] {
-						t.Errorf("expected unit %v, got %v", tt.units[i], savedUnit)
+				if tt.ext == ".json" {
+					if err := json.NewDecoder(file).Decode(&savedUnit); err != nil {
+						t.Fatalf("failed to decode JSON: %v", err)
+					}
+				} else if tt.ext == ".yaml" {
+					if err := yaml.NewDecoder(file).Decode(&savedUnit); err != nil {
+						t.Fatalf("failed to decode YAML: %v", err)
 					}
 				}
-			}
-		})
-	}
-}
-
-func TestSaveUnitToYAML(t *testing.T) {
-	global.SaveLoadSetting = &setting.SaveLoadSettingS{}
-	global.SaveLoadSetting.SavePath = "./var"
-	global.SaveLoadSetting.SaveFileExt = ".yaml"
-
-	tests := []struct {
-		name     string
-		unit     unit.Unit
-		filename string
-		wantErr  bool
-	}{
-		{"ValidUnit", unit.Unit{
-			Name:       "TestUnit",
-			Character:  attributes.CharacterAttributes{},
-			Practice:   attributes.PracticeAttributes{},
-			Combat:     attributes.CombatAttributes{},
-			Experience: attributes.Experience{},
-			LocationID: 1,
-		}, "test_unit", false},
-		{"EmptyFilename", unit.Unit{
-			Name:       "TestUnit2",
-			Character:  attributes.CharacterAttributes{},
-			Practice:   attributes.PracticeAttributes{},
-			Combat:     attributes.CombatAttributes{},
-			Experience: attributes.Experience{},
-			LocationID: 1,
-		}, "", true},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			err := ecs_systems.SaveUnitToYAML(tt.unit, tt.filename)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("SaveUnitToYAML() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-
-			if !tt.wantErr {
-				filePath := filepath.Join(global.SaveLoadSetting.SavePath, tt.filename+"sv.yaml")
-				defer os.Remove(filePath)
-
-				file, err := os.Open(filePath)
-				if err != nil {
-					t.Fatalf("failed to open file: %v", err)
-				}
-				defer file.Close()
-
-				var savedUnit unit.Unit
-				if err := yaml.NewDecoder(file).Decode(&savedUnit); err != nil {
-					t.Fatalf("failed to decode YAML: %v", err)
-				}
 
 				if savedUnit != tt.unit {
 					t.Errorf("expected unit %v, got %v", tt.unit, savedUnit)
@@ -212,18 +105,15 @@ func TestSaveUnitToYAML(t *testing.T) {
 	}
 }
 
-func TestSaveUnitsToYAML(t *testing.T) {
-	global.SaveLoadSetting = &setting.SaveLoadSettingS{}
-	global.SaveLoadSetting.SavePath = "./var"
-	global.SaveLoadSetting.SaveFileExt = ".yaml"
-
+func TestSaveUnitsState(t *testing.T) {
 	tests := []struct {
 		name     string
 		units    []unit.Unit
 		filename string
+		ext      string
 		wantErr  bool
 	}{
-		{"ValidUnits", []unit.Unit{
+		{"ValidUnitsJSON", []unit.Unit{
 			{
 				Name:       "TestUnit1",
 				Character:  attributes.CharacterAttributes{},
@@ -240,8 +130,26 @@ func TestSaveUnitsToYAML(t *testing.T) {
 				Experience: attributes.Experience{},
 				LocationID: 2,
 			},
-		}, "test_units", false},
-		{"EmptyFilename", []unit.Unit{
+		}, "test_units", ".json", false},
+		{"ValidUnitsYAML", []unit.Unit{
+			{
+				Name:       "TestUnit1",
+				Character:  attributes.CharacterAttributes{},
+				Practice:   attributes.PracticeAttributes{},
+				Combat:     attributes.CombatAttributes{},
+				Experience: attributes.Experience{},
+				LocationID: 1,
+			},
+			{
+				Name:       "TestUnit2",
+				Character:  attributes.CharacterAttributes{},
+				Practice:   attributes.PracticeAttributes{},
+				Combat:     attributes.CombatAttributes{},
+				Experience: attributes.Experience{},
+				LocationID: 2,
+			},
+		}, "test_units", ".yaml", false},
+		{"EmptyFilenameJSON", []unit.Unit{
 			{
 				Name:       "TestUnit3",
 				Character:  attributes.CharacterAttributes{},
@@ -250,19 +158,43 @@ func TestSaveUnitsToYAML(t *testing.T) {
 				Experience: attributes.Experience{},
 				LocationID: 3,
 			},
-		}, "", true},
+		}, "", ".json", true},
+		{"EmptyFilenameYAML", []unit.Unit{
+			{
+				Name:       "TestUnit3",
+				Character:  attributes.CharacterAttributes{},
+				Practice:   attributes.PracticeAttributes{},
+				Combat:     attributes.CombatAttributes{},
+				Experience: attributes.Experience{},
+				LocationID: 3,
+			},
+		}, "", ".yaml", true},
+		{"UnsupportedExtension", []unit.Unit{
+			{
+				Name:       "TestUnit4",
+				Character:  attributes.CharacterAttributes{},
+				Practice:   attributes.PracticeAttributes{},
+				Combat:     attributes.CombatAttributes{},
+				Experience: attributes.Experience{},
+				LocationID: 4,
+			},
+		}, "test_units", ".txt", true},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			err := ecs_systems.SaveUnitsToYAML(&tt.units, tt.filename)
+			global.SaveLoadSetting = &setting.SaveLoadSettingS{}
+			global.SaveLoadSetting.SavePath = "./var"
+			global.SaveLoadSetting.SaveFileExt = tt.ext
+
+			err := ecs_systems.SaveUnitsState(&tt.units, tt.filename)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("SaveUnitsToYAML() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("SaveUnitsState() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 
 			if !tt.wantErr {
-				filePath := filepath.Join(global.SaveLoadSetting.SavePath, tt.filename+"sv.yaml")
+				filePath := filepath.Join(global.SaveLoadSetting.SavePath, tt.filename+"sv"+tt.ext)
 				defer os.Remove(filePath)
 
 				file, err := os.Open(filePath)
@@ -272,8 +204,14 @@ func TestSaveUnitsToYAML(t *testing.T) {
 				defer file.Close()
 
 				var savedUnits []unit.Unit
-				if err := yaml.NewDecoder(file).Decode(&savedUnits); err != nil {
-					t.Fatalf("failed to decode YAML: %v", err)
+				if tt.ext == ".json" {
+					if err := json.NewDecoder(file).Decode(&savedUnits); err != nil {
+						t.Fatalf("failed to decode JSON: %v", err)
+					}
+				} else if tt.ext == ".yaml" {
+					if err := yaml.NewDecoder(file).Decode(&savedUnits); err != nil {
+						t.Fatalf("failed to decode YAML: %v", err)
+					}
 				}
 
 				if len(savedUnits) != len(tt.units) {

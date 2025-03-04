@@ -10,7 +10,38 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-func saveToFile(data interface{}, filename string, encoderFunc func(file *os.File) error) error {
+type Encoder interface {
+	Encode(v interface{}) error
+}
+
+type jsonEncoder struct {
+	encoder *json.Encoder
+}
+
+func (je *jsonEncoder) Encode(v interface{}) error {
+	return je.encoder.Encode(v)
+}
+
+type yamlEncoder struct {
+	encoder *yaml.Encoder
+}
+
+func (ye *yamlEncoder) Encode(v interface{}) error {
+	return ye.encoder.Encode(v)
+}
+
+func getEncoder(file *os.File, ext string) (Encoder, error) {
+	switch ext {
+	case ".json":
+		return &jsonEncoder{encoder: json.NewEncoder(file)}, nil
+	case ".yaml", ".yml":
+		return &yamlEncoder{encoder: yaml.NewEncoder(file)}, nil
+	default:
+		return nil, errors.New("unsupported file extension")
+	}
+}
+
+func saveToFile(data interface{}, filename string) error {
 	if filename == "" {
 		return errors.New("filename cannot be empty")
 	}
@@ -25,55 +56,18 @@ func saveToFile(data interface{}, filename string, encoderFunc func(file *os.Fil
 	}
 	defer file.Close()
 
-	return encoderFunc(file)
-}
+	encoder, err := getEncoder(file, global.SaveLoadSetting.SaveFileExt)
+	if err != nil {
+		return err
+	}
 
-func SaveUnitToJSON(unit unit.Unit, filename string) error {
-	return saveToFile(unit, filename, func(file *os.File) error {
-		encoder := json.NewEncoder(file)
-		return encoder.Encode(unit)
-	})
-}
-
-func SaveUnitsToJSON(units *[]unit.Unit, filename string) error {
-	return saveToFile(units, filename, func(file *os.File) error {
-		encoder := json.NewEncoder(file)
-		return encoder.Encode(units)
-	})
-}
-
-func SaveUnitToYAML(unit unit.Unit, filename string) error {
-	return saveToFile(unit, filename, func(file *os.File) error {
-		encoder := yaml.NewEncoder(file)
-		return encoder.Encode(unit)
-	})
-}
-
-func SaveUnitsToYAML(units *[]unit.Unit, filename string) error {
-	return saveToFile(units, filename, func(file *os.File) error {
-		encoder := yaml.NewEncoder(file)
-		return encoder.Encode(units)
-	})
+	return encoder.Encode(data)
 }
 
 func SaveUnitState(unit unit.Unit, filename string) error {
-	switch global.SaveLoadSetting.SaveFileExt {
-	case ".json":
-		return SaveUnitToJSON(unit, filename)
-	case ".yaml", ".yml":
-		return SaveUnitToYAML(unit, filename)
-	default:
-		return errors.New("unsupported file extension")
-	}
+	return saveToFile(unit, filename)
 }
 
 func SaveUnitsState(units *[]unit.Unit, filename string) error {
-	switch global.SaveLoadSetting.SaveFileExt {
-	case ".json":
-		return SaveUnitsToJSON(units, filename)
-	case ".yaml", ".yml":
-		return SaveUnitsToYAML(units, filename)
-	default:
-		return errors.New("unsupported file extension")
-	}
+	return saveToFile(units, filename)
 }
