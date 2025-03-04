@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/logos/ecs/components/attributes"
+	"github.com/logos/ecs/ecs_systems"
 	"github.com/logos/ecs/entities/unit"
-	"github.com/logos/ecs/systems"
 )
 
 func TestExperienceSystem_Update(t *testing.T) {
@@ -40,7 +40,7 @@ func TestExperienceSystem_Update(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		es := &systems.ExperienceSystem{
+		es := &ecs_systems.ExperienceSystem{
 			Unit: tt.units,
 		}
 		es.Update()
@@ -94,7 +94,7 @@ func TestExperienceSystem_Update_Concurrent(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		es := &systems.ExperienceSystem{
+		es := &ecs_systems.ExperienceSystem{
 			Unit: tt.units,
 		}
 		es.Update()
@@ -143,7 +143,7 @@ func TestExperienceSystem_Start(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		es := &systems.ExperienceSystem{
+		es := &ecs_systems.ExperienceSystem{
 			Unit: tt.units,
 		}
 		done := make(chan struct{})

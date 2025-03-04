@@ -1,4 +1,4 @@
-package systems
+package ecs_systems
 
 import (
 	"sync"
