@@ -5,11 +5,11 @@ import "fmt"
 // CombatAttributes defines the combat attributes of a character
 // NOTE: By calculting
 type CombatAttributes struct {
-	Attack       int     // Attack
-	Defense      int     // Defense
-	CriticalRate float64 // Critical Rate
-	Accuracy     float64 // Accuracy
-	Evasion      float64 // Evasion
+	Attack       int     `json:"attack"`       // Attack
+	Defense      int     `json:"defense"`      // Defense
+	CriticalRate float64 `json:"criticalRate"` // Critical Rate
+	Accuracy     float64 `json:"accuracy"`     // Accuracy
+	Evasion      float64 `json:"evasion"`      // Evasion
 }
 
 // NewCombatAttributes creates and initializes a character's combat attributes

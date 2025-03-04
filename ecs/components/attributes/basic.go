@@ -4,11 +4,11 @@ import "fmt"
 
 // CharacterAttributes defines the basic attributes of a character
 type CharacterAttributes struct {
-	Vitality     int // Vitality
-	QiEnergy     int // Qi/Energy
-	Strength     int // Strength
-	Agility      int // Agility
-	Intelligence int // Intelligence
+	Vitality     int `json:"vitality"`     // Vitality
+	QiEnergy     int `json:"qi_energy"`    // Qi/Energy
+	Strength     int `json:"strength"`     // Strength
+	Agility      int `json:"agility"`      // Agility
+	Intelligence int `json:"intelligence"` // Intelligence
 }
 
 // NewCharacterAttributes creates and initializes a character's attributes

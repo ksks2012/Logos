@@ -4,12 +4,12 @@ import "fmt"
 
 // PracticeAttributes defines the special attributes of a character
 type PracticeAttributes struct {
-	SpiritualRoot    string // Spiritual Root (e.g., Gold, Wood, Water, Fire, Earth, etc.)
-	BodyConstitution int    // Body Constitution
-	Comprehension    int    // Comprehension
-	LuckFortune      int    // Luck/Fortune
-	Willpower        int    // Willpower
-	CultivationLevel int    // Cultivation Level
+	SpiritualRoot    string `json:"spiritual_root"`    // Spiritual Root (e.g., Gold, Wood, Water, Fire, Earth, etc.)
+	BodyConstitution int    `json:"body_constitution"` // Body Constitution
+	Comprehension    int    `json:"comprehension"`     // Comprehension
+	LuckFortune      int    `json:"luck_fortune"`      // Luck/Fortune
+	Willpower        int    `json:"willpower"`         // Willpower
+	CultivationLevel int    `json:"cultivation_level"` // Cultivation Level
 }
 
 // NewSpecialAttributes creates and initializes a character's special attributes

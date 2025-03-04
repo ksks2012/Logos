@@ -3,8 +3,8 @@ package attributes
 import "fmt"
 
 type Experience struct {
-	Level int
-	Stage int
+	Level int `json:"level"`
+	Stage int `json:"stage"`
 }
 
 func NewExperience(level int, stage int) Experience {

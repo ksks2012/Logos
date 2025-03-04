@@ -10,15 +10,15 @@ import (
 	"github.com/logos/global"
 )
 
-func InitialBiology(world *entities.World) []*unit.Unit {
-	var units = make([]*unit.Unit, world.TotalAura)
+func InitialBiology(world *entities.World) *[]unit.Unit {
+	var units = make([]unit.Unit, world.TotalAura)
 	for i := 0; i < int(world.TotalAura); i++ {
 		unit := initUnit(world)
-		units[i] = &unit
+		units[i] = unit
 		units[i].Display()
 	}
 
-	return units
+	return &units
 }
 
 func initUnit(world *entities.World) unit.Unit {

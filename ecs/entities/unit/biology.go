@@ -8,12 +8,12 @@ import (
 
 // Unit represents a complete character with all attributes
 type Unit struct {
-	Name       string
-	Character  attributes.CharacterAttributes
-	Practice   attributes.PracticeAttributes
-	Combat     attributes.CombatAttributes
-	Experience attributes.Experience
-	LocationID int64
+	Name       string                         `json:"name"`
+	Character  attributes.CharacterAttributes `json:"character"`
+	Practice   attributes.PracticeAttributes  `json:"practice"`
+	Combat     attributes.CombatAttributes    `json:"combat"`
+	Experience attributes.Experience          `json:"experience"`
+	LocationID int64                          `json:"location_id"`
 }
 
 // NewUnit creates and initializes a new unit with all attributes
