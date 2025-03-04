@@ -15,7 +15,6 @@ func SaveUnitToJSON(unit unit.Unit, filename string) error {
 		return errors.New("filename cannot be empty")
 	}
 	filename = global.SaveLoadSetting.SavePath + "/" + filename + "sv" + global.SaveLoadSetting.SaveFileExt
-	print(filename)
 	err := os.MkdirAll(global.SaveLoadSetting.SavePath, os.ModePerm)
 	if err != nil {
 		return err
@@ -36,7 +35,6 @@ func SaveUnitsToJSON(units *[]unit.Unit, filename string) error {
 		return errors.New("filename cannot be empty")
 	}
 	filename = global.SaveLoadSetting.SavePath + "/" + filename + "sv" + global.SaveLoadSetting.SaveFileExt
-	print(filename)
 	err := os.MkdirAll(global.SaveLoadSetting.SavePath, os.ModePerm)
 	if err != nil {
 		return err
