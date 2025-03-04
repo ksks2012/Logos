@@ -11,6 +11,7 @@ import (
 	"golang.org/x/sys/unix"
 	"gopkg.in/natefinch/lumberjack.v2"
 
+	"github.com/logos/ecs/ecs_systems"
 	"github.com/logos/global"
 	"github.com/logos/pkg/logger"
 	"github.com/logos/pkg/setting"
@@ -52,7 +53,9 @@ func main() {
 	signal.Notify(stopChannel, os.Interrupt, unix.SIGTERM)
 
 	world := initial.InitialWorld()
-	initial.InitialBiology(&world)
+	biologies := initial.InitialBiology(&world)
+
+	ecs_systems.SaveUnitsState(biologies, "test_unit")
 
 	cancel()
 }
