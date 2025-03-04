@@ -45,7 +45,7 @@
 - [] Simple NPC behavior change tracking
 - [] JSON / YAML to store game state
     - [] JSON
-        - [] Save
+        - [x] Save
         - [] Load
     - [] YAML
         - [] Save
