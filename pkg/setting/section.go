@@ -28,6 +28,15 @@ type DatabaseSettingS struct {
 	MaxOpenConns int
 }
 
+type SaveLoadSettingS struct {
+	SavePath     string
+	SaveFileName string
+	SaveFileExt  string
+	LoadPath     string
+	LoadFileName string
+	LoadFileExt  string
+}
+
 // AttributeRange defines a range for generating random attributes
 type AttributeRange struct {
 	Min int

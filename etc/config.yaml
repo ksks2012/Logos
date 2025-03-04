@@ -16,3 +16,10 @@ Database:
   ParseTime: True
   MaxIdleConns: 10
   MaxOpenConns: 30
+SaveLoad:
+  SavePath: var/data
+  SaveFileName: data
+  SaveFileExt: .json
+  LoadFileName: data
+  LoadFileExt: .json
+  LoadPath: var/data
