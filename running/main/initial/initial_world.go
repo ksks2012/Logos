@@ -8,7 +8,7 @@ import (
 	"github.com/logos/global"
 )
 
-func InitialWorld() entities.World {
+func InitialWorld() *entities.World {
 	// Create a new world
 
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
@@ -21,5 +21,5 @@ func InitialWorld() entities.World {
 	}
 	world.Display()
 
-	return world
+	return &world
 }

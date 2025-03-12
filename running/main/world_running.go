@@ -53,9 +53,15 @@ func main() {
 	signal.Notify(stopChannel, os.Interrupt, unix.SIGTERM)
 
 	world := initial.InitialWorld()
-	biologies := initial.InitialBiology(&world)
+	biologies := initial.InitialBiology(world)
 
-	ecs_systems.SaveUnitsState(biologies, "test_unit")
+	ecs_systems.SaveUnitsState(biologies, "test_unit_before_")
+
+	for i := 0; i < 10; i++ {
+		ecs_systems.UpdateWorld(world, biologies)
+	}
+
+	ecs_systems.SaveUnitsState(biologies, "test_unit_after_")
 
 	cancel()
 }
