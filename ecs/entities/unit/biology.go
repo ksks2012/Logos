@@ -14,6 +14,7 @@ type Unit struct {
 	Combat     attributes.CombatAttributes    `json:"combat"`
 	Experience attributes.Experience          `json:"experience"`
 	LocationID int64                          `json:"location_id"`
+	IsAlive    bool                           `json:"is_alive"`
 }
 
 // NewUnit creates and initializes a new unit with all attributes
@@ -24,6 +25,7 @@ func NewUnit(name string, charAttr attributes.CharacterAttributes, pracAttr attr
 		Practice:   pracAttr,
 		Combat:     combAttr,
 		LocationID: LocationID,
+		IsAlive:    true,
 	}
 }
 
@@ -35,6 +37,8 @@ func (u *Unit) SetLocationID(locationID int64) {
 // Display shows the unit's full attributes
 func (u Unit) Display() {
 	fmt.Printf("Unit Name: %s\n", u.Name)
+	fmt.Printf("Location ID: %d\n", u.LocationID)
+	fmt.Printf("Is Alive: %t\n", u.IsAlive)
 	fmt.Println("Basic Attributes:")
 	fmt.Printf("  Vitality: %d, Qi/Energy: %d, Strength: %d, Agility: %d, Intelligence: %d\n",
 		u.Character.Vitality, u.Character.QiEnergy, u.Character.Strength, u.Character.Agility, u.Character.Intelligence)

@@ -29,6 +29,9 @@ func (es *ExperienceSystem) Update() {
 		go func(units []*unit.Unit) {
 			defer wg.Done()
 			for _, e := range units {
+				if !e.IsAlive {
+					continue
+				}
 				e.Experience.Level++
 				if e.Experience.Level > 10 {
 					e.Experience.Level = 1
