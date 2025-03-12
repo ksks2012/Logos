@@ -29,6 +29,7 @@ func initUnit(world *entities.World) unit.Unit {
 		Strength:     global.CARSetting.StrengthRange.Min + r.Intn(global.CARSetting.StrengthRange.Max-global.CARSetting.StrengthRange.Min),
 		Agility:      global.CARSetting.AgilityRange.Min + r.Intn(global.CARSetting.AgilityRange.Max-global.CARSetting.AgilityRange.Min),
 		Intelligence: global.CARSetting.IntelligenceRange.Min + r.Intn(global.CARSetting.IntelligenceRange.Max-global.CARSetting.IntelligenceRange.Min),
+		Age:          global.CARSetting.AgeRange.Min + r.Intn(global.CARSetting.AgeRange.Max-global.CARSetting.AgeRange.Min),
 	}
 	practiceAttributes := attributes.PracticeAttributes{
 		// TODO:

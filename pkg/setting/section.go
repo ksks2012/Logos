@@ -50,6 +50,7 @@ type CARSettingS struct {
 	StrengthRange     AttributeRange
 	AgilityRange      AttributeRange
 	IntelligenceRange AttributeRange
+	AgeRange          AttributeRange
 }
 
 type PARSettingS struct {

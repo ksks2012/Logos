@@ -9,6 +9,7 @@ type CharacterAttributes struct {
 	Strength     int `json:"strength"`     // Strength
 	Agility      int `json:"agility"`      // Agility
 	Intelligence int `json:"intelligence"` // Intelligence
+	Age          int `json:"age"`          // Age
 }
 
 // NewCharacterAttributes creates and initializes a character's attributes

@@ -17,6 +17,9 @@ CharacterAttributeRanges:
   IntelligenceRange:
     Min: 1
     Max: 10
+  AgeRange:
+    Min: 1
+    Max: 90
 PracticeAttributes:
   BodyConstitutionRange:
     Min: 1
