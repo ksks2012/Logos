@@ -187,7 +187,11 @@ func TestSaveUnitsState(t *testing.T) {
 			global.SaveLoadSetting.SavePath = "./var"
 			global.SaveLoadSetting.SaveFileExt = tt.ext
 
-			err := ecs_systems.SaveUnitsState(&tt.units, tt.filename)
+			unitsPtr := make([]*unit.Unit, len(tt.units))
+			for i := range tt.units {
+				unitsPtr[i] = &tt.units[i]
+			}
+			err := ecs_systems.SaveUnitsState(unitsPtr, tt.filename)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("SaveUnitsState() error = %v, wantErr %v", err, tt.wantErr)
 				return

@@ -68,6 +68,6 @@ func SaveUnitState(unit unit.Unit, filename string) error {
 	return saveToFile(unit, filename)
 }
 
-func SaveUnitsState(units *[]unit.Unit, filename string) error {
+func SaveUnitsState(units []*unit.Unit, filename string) error {
 	return saveToFile(units, filename)
 }
