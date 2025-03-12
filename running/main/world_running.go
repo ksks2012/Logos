@@ -11,6 +11,7 @@ import (
 	"golang.org/x/sys/unix"
 	"gopkg.in/natefinch/lumberjack.v2"
 
+	"github.com/logos/checker"
 	"github.com/logos/ecs/ecs_systems"
 	"github.com/logos/global"
 	"github.com/logos/pkg/logger"
@@ -57,11 +58,15 @@ func main() {
 
 	ecs_systems.SaveUnitsState(biologies, "test_unit_before_")
 
-	for i := 0; i < 10; i++ {
+	for i := 0; i < 100; i++ {
 		ecs_systems.UpdateWorld(world, biologies)
 	}
 
 	ecs_systems.SaveUnitsState(biologies, "test_unit_after_")
+
+	checker.CheckAvgDeadAge(biologies)
+
+	// ecs_systems.SaveUnitsState(biologies, "test_unit_")
 
 	cancel()
 }
