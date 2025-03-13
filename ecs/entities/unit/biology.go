@@ -14,6 +14,7 @@ type Unit struct {
 	Practice   attributes.PracticeAttributes  `json:"practice"`
 	Combat     attributes.CombatAttributes    `json:"combat"`
 	Experience attributes.Experience          `json:"experience"`
+	Relations  attributes.RelationAttributes  `json:"relations"`
 	LocationID int64                          `json:"location_id"`
 	IsAlive    bool                           `json:"is_alive"`
 }
