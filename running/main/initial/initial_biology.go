@@ -15,7 +15,7 @@ func InitialBiology(world *entities.World) []*unit.Unit {
 	for i := 0; i < int(world.TotalAura); i++ {
 		unit := initUnit(world)
 		units[i] = &unit
-		units[i].Display()
+		// units[i].Display()
 	}
 
 	return units
@@ -23,6 +23,7 @@ func InitialBiology(world *entities.World) []*unit.Unit {
 
 func initUnit(world *entities.World) unit.Unit {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	defer global.IncrementCurrentUnitID()
 	characterAttributes := attributes.CharacterAttributes{
 		Vitality:     global.CARSetting.VitalityRange.Min + r.Intn(global.CARSetting.VitalityRange.Max-global.CARSetting.VitalityRange.Min),
 		QiEnergy:     global.CARSetting.QiEnergyRange.Min + r.Intn(global.CARSetting.QiEnergyRange.Max-global.CARSetting.QiEnergyRange.Min),
@@ -42,6 +43,7 @@ func initUnit(world *entities.World) unit.Unit {
 	}
 
 	newUnit := unit.NewUnit(
+		global.CurrentUnitID,
 		"TestUnit",
 		characterAttributes,
 		practiceAttributes,

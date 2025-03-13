@@ -8,6 +8,7 @@ import (
 
 // Unit represents a complete character with all attributes
 type Unit struct {
+	ID         int64                          `json:"id"`
 	Name       string                         `json:"name"`
 	Character  attributes.CharacterAttributes `json:"character"`
 	Practice   attributes.PracticeAttributes  `json:"practice"`
@@ -17,9 +18,12 @@ type Unit struct {
 	IsAlive    bool                           `json:"is_alive"`
 }
 
+// TODO: Add attributes for temporary status effects
+
 // NewUnit creates and initializes a new unit with all attributes
-func NewUnit(name string, charAttr attributes.CharacterAttributes, pracAttr attributes.PracticeAttributes, combAttr attributes.CombatAttributes, LocationID int64) Unit {
+func NewUnit(id int64, name string, charAttr attributes.CharacterAttributes, pracAttr attributes.PracticeAttributes, combAttr attributes.CombatAttributes, LocationID int64) Unit {
 	return Unit{
+		ID:         id,
 		Name:       name,
 		Character:  charAttr,
 		Practice:   pracAttr,

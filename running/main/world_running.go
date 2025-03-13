@@ -45,6 +45,11 @@ func init() {
 	if err != nil {
 		log.Fatalf("init.setupLogger err: %v", err)
 	}
+
+	err = setupGlobalValue()
+	if err != nil {
+		log.Fatalf("init.setupGlobalValue err: %v", err)
+	}
 }
 
 func main() {
@@ -65,6 +70,7 @@ func main() {
 	ecs_systems.SaveUnitsState(biologies, "test_unit_after_")
 
 	checker.CheckAvgDeadAge(biologies)
+	checker.CheckReapetedID(biologies)
 
 	// ecs_systems.SaveUnitsState(biologies, "test_unit_")
 
@@ -135,5 +141,10 @@ func setupLogger() error {
 		LocalTime: true,
 	}, "", log.LstdFlags).WithCaller(2)
 
+	return nil
+}
+
+func setupGlobalValue() error {
+	global.InitCurrentUnitID()
 	return nil
 }

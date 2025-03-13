@@ -21,3 +21,14 @@ func CheckAvgDeadAge(units []*unit.Unit) {
 	fmt.Printf("Average age of dead units: %v\n", avg)
 	fmt.Printf("Max age of dead units: %v\n", maxi)
 }
+
+func CheckReapetedID(units []*unit.Unit) {
+	idMap := make(map[int64]bool)
+	for _, u := range units {
+		if idMap[u.ID] {
+			fmt.Printf("Repeated ID: %v\n", u.ID)
+		}
+		idMap[u.ID] = true
+	}
+	fmt.Printf("ID is unique\n")
+}
