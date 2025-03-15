@@ -36,3 +36,32 @@ func (d DiagramsAttributes) Display() {
 	fmt.Printf("Mountain: %.2f\n", d.Mountain)
 	fmt.Printf("Marsh: %.2f\n", d.Marsh)
 }
+
+func (d *DiagramsAttributes) Encode() uint8 {
+	var encoded uint8
+	if d.Sky > 0 {
+		encoded |= 1 << 0
+	}
+	if d.Earth > 0 {
+		encoded |= 1 << 1
+	}
+	if d.Thunder > 0 {
+		encoded |= 1 << 2
+	}
+	if d.Wind > 0 {
+		encoded |= 1 << 3
+	}
+	if d.Water > 0 {
+		encoded |= 1 << 4
+	}
+	if d.Fire > 0 {
+		encoded |= 1 << 5
+	}
+	if d.Mountain > 0 {
+		encoded |= 1 << 6
+	}
+	if d.Marsh > 0 {
+		encoded |= 1 << 7
+	}
+	return encoded
+}
