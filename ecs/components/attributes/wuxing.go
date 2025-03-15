@@ -3,11 +3,11 @@ package attributes
 import "fmt"
 
 type WuXingAttributes struct {
-	Wood  float64
-	Fire  float64
-	Earth float64
-	Metal float64
-	Water float64
+	Wood  float64 `json:"wood"`
+	Fire  float64 `json:"fire"`
+	Earth float64 `json:"earth"`
+	Metal float64 `json:"metal"`
+	Water float64 `json:"water"`
 }
 
 func NewWuXing(wood, fire, earth, metal, water float64) WuXingAttributes {
