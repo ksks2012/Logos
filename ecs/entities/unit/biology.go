@@ -3,6 +3,7 @@ package unit
 import (
 	"fmt"
 
+	"github.com/logos/ecs/components"
 	"github.com/logos/ecs/components/attributes"
 )
 
@@ -10,11 +11,14 @@ import (
 type Unit struct {
 	ID         int64                          `json:"id"`
 	Name       string                         `json:"name"`
+	UnitTypeID components.UnitType            `json:"unit_type_id"`
 	Character  attributes.CharacterAttributes `json:"character"`
 	Practice   attributes.PracticeAttributes  `json:"practice"`
 	Combat     attributes.CombatAttributes    `json:"combat"`
 	Experience attributes.Experience          `json:"experience"`
 	Relations  attributes.RelationAttributes  `json:"relations"`
+	// TODO:
+	Alignment  attributes.AlignmentAttributes `json:"alignment"`
 	LocationID int64                          `json:"location_id"`
 	IsAlive    bool                           `json:"is_alive"`
 }
@@ -22,10 +26,11 @@ type Unit struct {
 // TODO: Add attributes for temporary status effects
 
 // NewUnit creates and initializes a new unit with all attributes
-func NewUnit(id int64, name string, charAttr attributes.CharacterAttributes, pracAttr attributes.PracticeAttributes, combAttr attributes.CombatAttributes, LocationID int64) Unit {
+func NewUnit(id int64, name string, unitTypeID components.UnitType, charAttr attributes.CharacterAttributes, pracAttr attributes.PracticeAttributes, combAttr attributes.CombatAttributes, LocationID int64) Unit {
 	return Unit{
 		ID:         id,
 		Name:       name,
+		UnitTypeID: unitTypeID,
 		Character:  charAttr,
 		Practice:   pracAttr,
 		Combat:     combAttr,

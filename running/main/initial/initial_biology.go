@@ -4,6 +4,7 @@ import (
 	"math/rand"
 	"time"
 
+	"github.com/logos/ecs/components"
 	"github.com/logos/ecs/components/attributes"
 	"github.com/logos/ecs/entities"
 	"github.com/logos/ecs/entities/unit"
@@ -24,6 +25,7 @@ func InitialBiology(world *entities.World) []*unit.Unit {
 func initUnit(world *entities.World) unit.Unit {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	defer global.IncrementCurrentUnitID()
+	unitTypeID := components.RandomUnitType()
 	characterAttributes := attributes.CharacterAttributes{
 		Vitality:     global.CARSetting.VitalityRange.Min + r.Intn(global.CARSetting.VitalityRange.Max-global.CARSetting.VitalityRange.Min),
 		QiEnergy:     global.CARSetting.QiEnergyRange.Min + r.Intn(global.CARSetting.QiEnergyRange.Max-global.CARSetting.QiEnergyRange.Min),
@@ -44,7 +46,9 @@ func initUnit(world *entities.World) unit.Unit {
 
 	newUnit := unit.NewUnit(
 		global.CurrentUnitID,
+		// TODO: Name generation
 		"TestUnit",
+		unitTypeID,
 		characterAttributes,
 		practiceAttributes,
 		attributes.CalculateCombatAttributes(characterAttributes, practiceAttributes),
